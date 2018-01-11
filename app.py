@@ -19,6 +19,8 @@ tasks = [
     }
 ]
 
+TOKEN = os.environ.get('OTHER', None)
+
 @app.route('/')
 def index():
     return "Hello, World!"
@@ -26,7 +28,21 @@ def index():
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     return jsonify({'tasks': tasks})
-
+	
+@app.route('/slack-invite/, methods=['POST'])
+def invite_slack():
+	if not request.json or not 'address' in request.json:
+		abort(400)
+		
+	data = {}
+	data["email"] = request.json.address
+	data["token"] = requests.json.address
+	data["set_active"] = true
+	
+	payload = jsonify(data)
+	
+	response = requests.post('https://wwchsv.slack.com/api/users.admin.invite/', data = payload)
+	response.text
 
 if __name__ == '__main__':
     app.run(debug=True)
