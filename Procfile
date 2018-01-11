@@ -1,1 +1,1 @@
-web: gunicorn gettingstarted --log-file -
+web: gunicorn app:app
